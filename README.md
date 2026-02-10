@@ -1,18 +1,11 @@
-Got it 👍
-Here is your **professional README rewritten in the SAME FORMAT and STYLE** as the default **React + Vite** template you shared — clean headings, short paragraphs, and bullet points.
-
-You can **directly replace** your current `README.md` with this 👇
-
----
-
-# Provincial Complaint Management System (Frontend)
+# Complaint Management System (Frontend)
 
 This project provides a modern **React + Vite** frontend for a **Provincial Government Complaint Management System**.
 It is designed as a **MERN-style portfolio project**, focusing only on the **frontend**, while the backend can be integrated later.
 
 The application allows **citizens to submit and track complaints** and **administrators to manage and resolve them** through role-based dashboards.
 
----
+
 
 ## Project Purpose
 
@@ -23,7 +16,7 @@ This project is built to:
 * Practice real-world features like authentication, dashboards, and CRUD operations
 * Serve as a strong portfolio project for internships and jobs
 
----
+
 
 ## Tech Stack
 
@@ -38,7 +31,7 @@ The following technologies are used in this project:
 * **React Query (TanStack Query)** – Server state management and caching
 * **Axios** – API request handling
 
----
+
 
 ## Application Features
 
@@ -65,7 +58,7 @@ The following technologies are used in this project:
 * Responsive design (mobile & desktop)
 * Clean UI based on Figma design
 
----
+
 
 ## Project Structure
 
@@ -86,7 +79,7 @@ src/
 └── main.jsx
 ```
 
----
+
 
 ## Development Setup
 
@@ -110,23 +103,23 @@ npm run dev
 http://localhost:5173
 ```
 
----
+
 
 ## Backend Integration
 
 This project currently uses **mock data** for development.
 A backend built with **Node.js, Express, and MongoDB** can be connected later without changing the frontend architecture.
 
----
+
 
 ## Project Status
 
-* Frontend UI: ✅ Completed
-* Routing & State Management: ✅ Implemented
-* Mock API: ✅ Available
-* Backend Integration: ⏳ Planned
+* Frontend UI: In progress
+* Routing & State Management: Implemented
+* Mock API: Available
+* Backend Integration: Planned
 
----
+
 
 ## License
 
