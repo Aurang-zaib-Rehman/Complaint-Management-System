@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
+                          //children means required page 
 const ProtectedRoute = ({ children, role }) => {
   const { isAuthenticated, userRole } = useAuth();
 
