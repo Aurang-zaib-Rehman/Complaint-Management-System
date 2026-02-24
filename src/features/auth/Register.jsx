@@ -4,25 +4,24 @@ import { useDispatch } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 import { FiBriefcase, FiUser, FiArrowRight } from "react-icons/fi";
 import { loginSuccess } from "./authSlice";
-import { loginUser } from "../../api/auth.api";
+import { registerUser } from "../../api/auth.api";
 
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("citizen"); // "citizen" | "admin"
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("citizen");
   const [errorMsg, setErrorMsg] = useState("");
 
   const mutation = useMutation({
-    mutationFn: loginUser,
+    mutationFn: registerUser,
     onSuccess: (data) => {
-      // store token
       localStorage.setItem("token", data.token);
-      // update redux
       dispatch(loginSuccess({ user: data.user, role: data.user.role }));
-      // redirect by role
       if (data.user.role === "admin") {
         navigate("/admin");
       } else {
@@ -31,7 +30,7 @@ const Login = () => {
     },
     onError: (err) => {
       setErrorMsg(
-        err?.response?.data?.message || "Login failed. Please check your credentials."
+        err?.response?.data?.message || "Registration failed. Please try again."
       );
     },
   });
@@ -39,11 +38,41 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMsg("");
-    if (!email || !password) {
+
+    if (!name || !email || !password || !confirmPassword) {
       setErrorMsg("Please fill in all fields.");
       return;
     }
-    mutation.mutate({ email, password });
+    if (password !== confirmPassword) {
+      setErrorMsg("Passwords do not match.");
+      return;
+    }
+    if (password.length < 6) {
+      setErrorMsg("Password must be at least 6 characters.");
+      return;
+    }
+
+    mutation.mutate({ name, email, password, role });
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "13px 16px",
+    borderRadius: "12px",
+    border: "1.5px solid #e5e7eb",
+    background: "#f9f7ff",
+    fontSize: "14px",
+    outline: "none",
+    boxSizing: "border-box",
+    color: "#111827",
+  };
+
+  const labelStyle = {
+    display: "block",
+    fontWeight: 600,
+    fontSize: "14px",
+    color: "#111827",
+    marginBottom: "8px",
   };
 
   return (
@@ -64,12 +93,12 @@ const Login = () => {
           borderRadius: "24px",
           padding: "48px 40px",
           width: "100%",
-          maxWidth: "440px",
+          maxWidth: "480px",
           boxShadow: "0 8px 48px rgba(124,58,237,0.12)",
         }}
       >
         {/* Icon */}
-        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <div style={{ textAlign: "center", marginBottom: "28px" }}>
           <div
             style={{
               width: "64px",
@@ -92,10 +121,10 @@ const Login = () => {
               marginBottom: "6px",
             }}
           >
-            Welcome Back
+            Create Account
           </h1>
           <p style={{ color: "#9ca3af", fontSize: "14px" }}>
-            Sign in to access your account
+            Join us to submit and track complaints
           </p>
         </div>
 
@@ -118,85 +147,58 @@ const Login = () => {
         )}
 
         <form onSubmit={handleSubmit}>
+          {/* Full Name */}
+          <div style={{ marginBottom: "18px" }}>
+            <label style={labelStyle}>Full Name</label>
+            <input
+              type="text"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={inputStyle}
+            />
+          </div>
+
           {/* Email */}
-          <div style={{ marginBottom: "20px" }}>
-            <label
-              style={{
-                display: "block",
-                fontWeight: 600,
-                fontSize: "14px",
-                color: "#111827",
-                marginBottom: "8px",
-              }}
-            >
-              Email Address
-            </label>
+          <div style={{ marginBottom: "18px" }}>
+            <label style={labelStyle}>Email Address</label>
             <input
               type="email"
               placeholder="your.email@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "13px 16px",
-                borderRadius: "12px",
-                border: "1.5px solid #e5e7eb",
-                background: "#f9f7ff",
-                fontSize: "14px",
-                outline: "none",
-                boxSizing: "border-box",
-                color: "#111827",
-              }}
+              style={inputStyle}
             />
           </div>
 
           {/* Password */}
-          <div style={{ marginBottom: "24px" }}>
-            <label
-              style={{
-                display: "block",
-                fontWeight: 600,
-                fontSize: "14px",
-                color: "#111827",
-                marginBottom: "8px",
-              }}
-            >
-              Password
-            </label>
+          <div style={{ marginBottom: "18px" }}>
+            <label style={labelStyle}>Password</label>
             <input
               type="password"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "13px 16px",
-                borderRadius: "12px",
-                border: "1.5px solid #e5e7eb",
-                background: "#f9f7ff",
-                fontSize: "14px",
-                outline: "none",
-                boxSizing: "border-box",
-                color: "#111827",
-              }}
+              style={inputStyle}
             />
           </div>
 
-          {/* Login As */}
+          {/* Confirm Password */}
+          <div style={{ marginBottom: "24px" }}>
+            <label style={labelStyle}>Confirm Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              style={inputStyle}
+            />
+          </div>
+
+          {/* Register As */}
           <div style={{ marginBottom: "28px" }}>
-            <label
-              style={{
-                display: "block",
-                fontWeight: 600,
-                fontSize: "14px",
-                color: "#111827",
-                marginBottom: "12px",
-              }}
-            >
-              Login As
-            </label>
+            <label style={labelStyle}>Register As</label>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-              {/* Citizen */}
               <button
                 type="button"
                 onClick={() => setRole("citizen")}
@@ -225,7 +227,6 @@ const Login = () => {
                 </span>
               </button>
 
-              {/* Officer */}
               <button
                 type="button"
                 onClick={() => setRole("admin")}
@@ -280,11 +281,10 @@ const Login = () => {
             }}
           >
             <FiArrowRight size={18} />
-            {mutation.isPending ? "Signing In..." : "Sign In"}
+            {mutation.isPending ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
-        {/* Footer link */}
         <p
           style={{
             textAlign: "center",
@@ -293,12 +293,12 @@ const Login = () => {
             color: "#9ca3af",
           }}
         >
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <Link
-            to="/register"
+            to="/login"
             style={{ color: "#7c3aed", fontWeight: 600, textDecoration: "none" }}
           >
-            Create Account
+            Sign In
           </Link>
         </p>
       </div>
@@ -306,4 +306,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

@@ -1,77 +1,115 @@
-// import useAuth from "../hooks/useAuth";
-
-// const { isAuthenticated, role } = useAuth();
-
-// console.log(isAuthenticated, role);
-
-
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { FiBriefcase } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
+import { logout } from "../features/auth/authSlice";
 
 const Navbar = () => {
-  const { isAuthenticated, role, logout, user } = useAuth();
+  const { isAuthenticated, role, user } = useAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
-    <nav className="w-full bg-white shadow-md px-6 py-4 flex items-center justify-between">
+    <nav
+      style={{
+        background: "#fff",
+        borderBottom: "1px solid #ede9fe",
+        padding: "0 40px",
+        height: "64px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+      }}
+    >
       {/* Logo */}
-      <div className="text-xl font-bold text-blue-600">
-        <Link to="/">MyApp</Link>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div
+          style={{
+            width: "44px",
+            height: "44px",
+            borderRadius: "12px",
+            background: "linear-gradient(135deg,#7c3aed,#9333ea)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <FiBriefcase size={22} color="#fff" />
+        </div>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <div style={{ fontWeight: 700, fontSize: "15px", color: "#1e1b4b", lineHeight: 1.2 }}>
+            Provincial Government
+          </div>
+          <div style={{ fontSize: "11px", color: "#7c3aed", fontWeight: 500 }}>
+            Complaint Management
+          </div>
+        </Link>
       </div>
 
-      {/* Links */}
-      <div className="flex items-center gap-6">
-        <Link to="/" className="text-gray-700 hover:text-blue-600">
+      {/* Right */}
+      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <Link to="/" style={{ color: "#374151", fontWeight: 500, fontSize: "14px", textDecoration: "none" }}>
           Home
         </Link>
 
         {isAuthenticated && (
           <Link
-            to="/dashboard"
-            className="text-gray-700 hover:text-blue-600"
+            to={role === "admin" ? "/admin" : "/dashboard"}
+            style={{ color: "#374151", fontWeight: 500, fontSize: "14px", textDecoration: "none" }}
           >
             Dashboard
           </Link>
         )}
 
-        {/* Role based links */}
-        {isAuthenticated && role === "admin" && (
-          <Link
-            to="/admin"
-            className="text-gray-700 hover:text-blue-600"
-          >
-            Admin Panel
-          </Link>
-        )}
-      </div>
-
-      {/* Auth buttons */}
-      <div className="flex items-center gap-4">
         {!isAuthenticated ? (
           <>
             <Link
               to="/login"
-              className="px-4 py-2 text-sm border border-blue-600 text-blue-600 rounded hover:bg-blue-50"
+              style={{ color: "#374151", fontWeight: 500, fontSize: "14px", textDecoration: "none" }}
             >
-              Login
+              Sign In
             </Link>
-
             <Link
               to="/register"
-              className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+              style={{
+                background: "linear-gradient(135deg,#7c3aed,#9333ea)",
+                color: "#fff",
+                padding: "10px 22px",
+                borderRadius: "10px",
+                fontWeight: 600,
+                fontSize: "14px",
+                textDecoration: "none",
+              }}
             >
-              Register
+              Get Started
             </Link>
           </>
         ) : (
           <>
-            <span className="text-sm text-gray-600">
+            <span style={{ fontSize: "13px", color: "#6b7280" }}>
               Hi, {user?.name || "User"}
             </span>
-
             <button
-              onClick={logout}
-              className="px-4 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+              onClick={handleLogout}
+              style={{
+                padding: "9px 20px",
+                borderRadius: "10px",
+                background: "#fef2f2",
+                color: "#dc2626",
+                border: "1px solid #fecaca",
+                fontWeight: 600,
+                fontSize: "13px",
+                cursor: "pointer",
+              }}
             >
               Logout
             </button>
