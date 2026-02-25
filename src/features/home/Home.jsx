@@ -7,9 +7,10 @@ import {
   FiBriefcase,
   FiZap,
   FiArrowRight,
-  FiLogIn,
 } from "react-icons/fi";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import logo from "../../assets/images/logo.png";
 
 // ── Navbar ────────────────────────────────────────────────────────────────────
 const Navbar = () => (
@@ -29,19 +30,7 @@ const Navbar = () => (
   >
     {/* Logo */}
     <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-      <div
-        style={{
-          width: "44px",
-          height: "44px",
-          borderRadius: "12px",
-          background: "linear-gradient(135deg,#7c3aed,#9333ea)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <FiBriefcase size={22} color="#fff" />
-      </div>
+      <img src={logo} alt="Logo" style={{ width: "44px", height: "44px", borderRadius: "12px", objectFit: "contain" }} />
       <div>
         <div style={{ fontWeight: 700, fontSize: "15px", color: "#1e1b4b", lineHeight: 1.2 }}>
           Provincial Government
@@ -180,7 +169,7 @@ const Hero = () => (
             textDecoration: "none",
           }}
         >
-          <FiBriefcase size={16} />
+          <MdOutlineAdminPanelSettings size={18} />
           Officer Login
         </Link>
       </div>

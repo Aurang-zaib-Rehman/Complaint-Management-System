@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { FiBriefcase } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
 import { logout } from "../features/auth/authSlice";
+import logo from "../assets/images/logo.png";
 
 const Navbar = () => {
   const { isAuthenticated, role, user } = useAuth();
@@ -32,19 +32,11 @@ const Navbar = () => {
     >
       {/* Logo */}
       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-        <div
-          style={{
-            width: "44px",
-            height: "44px",
-            borderRadius: "12px",
-            background: "linear-gradient(135deg,#7c3aed,#9333ea)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <FiBriefcase size={22} color="#fff" />
-        </div>
+        <img
+          src={logo}
+          alt="Logo"
+          style={{ width: "44px", height: "44px", borderRadius: "12px", objectFit: "contain" }}
+        />
         <Link to="/" style={{ textDecoration: "none" }}>
           <div style={{ fontWeight: 700, fontSize: "15px", color: "#1e1b4b", lineHeight: 1.2 }}>
             Provincial Government

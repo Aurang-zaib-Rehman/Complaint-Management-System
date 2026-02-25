@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
-import { FiBriefcase, FiUser, FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import { HiOutlineUserCircle } from "react-icons/hi";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { loginSuccess } from "./authSlice";
 import { loginUser } from "../../api/auth.api";
+import logo from "../../assets/images/logo.png";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -68,22 +71,31 @@ const Login = () => {
           boxShadow: "0 8px 48px rgba(124,58,237,0.12)",
         }}
       >
-        {/* Icon */}
+        {/* Back to Home */}
+        <Link
+          to="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            color: "#7c3aed",
+            fontSize: "13px",
+            fontWeight: 600,
+            textDecoration: "none",
+            marginBottom: "24px",
+          }}
+        >
+          <FiArrowLeft size={15} />
+          Back to Home
+        </Link>
+
+        {/* Logo */}
         <div style={{ textAlign: "center", marginBottom: "24px" }}>
-          <div
-            style={{
-              width: "64px",
-              height: "64px",
-              borderRadius: "18px",
-              background: "linear-gradient(135deg,#7c3aed,#9333ea)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto 20px",
-            }}
-          >
-            <FiBriefcase size={28} color="#fff" />
-          </div>
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ width: "64px", height: "64px", borderRadius: "18px", objectFit: "contain", margin: "0 auto 20px", display: "block" }}
+          />
           <h1
             style={{
               fontSize: "26px",
@@ -213,7 +225,7 @@ const Login = () => {
                   transition: "all 0.2s",
                 }}
               >
-                <FiUser size={22} color={role === "citizen" ? "#7c3aed" : "#9ca3af"} />
+                <HiOutlineUserCircle size={26} color={role === "citizen" ? "#7c3aed" : "#9ca3af"} />
                 <span
                   style={{
                     fontWeight: 600,
@@ -242,7 +254,7 @@ const Login = () => {
                   transition: "all 0.2s",
                 }}
               >
-                <FiBriefcase size={22} color={role === "admin" ? "#7c3aed" : "#9ca3af"} />
+                <MdOutlineAdminPanelSettings size={26} color={role === "admin" ? "#7c3aed" : "#9ca3af"} />
                 <span
                   style={{
                     fontWeight: 600,
