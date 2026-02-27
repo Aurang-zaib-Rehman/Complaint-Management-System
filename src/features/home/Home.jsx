@@ -86,25 +86,6 @@ const Hero = () => (
     }}
   >
     <div style={{ maxWidth: "700px" }}>
-      {/* Badge */}
-      <div
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "8px",
-          background: "rgba(167,139,250,0.18)",
-          border: "1px solid rgba(167,139,250,0.4)",
-          color: "#7c3aed",
-          padding: "6px 18px",
-          borderRadius: "999px",
-          fontSize: "13px",
-          fontWeight: 500,
-          marginBottom: "28px",
-        }}
-      >
-        ✦ Modern Complaint Management Platform
-      </div>
-
       <h1
         style={{
           fontSize: "clamp(42px,6vw,68px)",
