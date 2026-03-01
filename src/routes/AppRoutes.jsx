@@ -3,9 +3,8 @@ import Home from "../features/home/Home";
 import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
 import ProtectedRoute from "../components/ProtectedRoute";
-
-// These pages are empty for now — fill them later
 import CitizenDashboard from "../features/citizen/CitizenDashboard";
+import MyComplaints from "../features/citizen/MyComplaint";
 import AdminDashboard from "../features/admin/AdminDashboard";
 
 const AppRoutes = () => {
@@ -22,6 +21,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute role="citizen">
             <CitizenDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-complaints"
+        element={
+          <ProtectedRoute role="citizen">
+            <MyComplaints />
           </ProtectedRoute>
         }
       />
