@@ -1,13 +1,37 @@
-import api from "./axios";
+const BASE_URL = "https://complaintbackend.vercel.app";
 
-// POST /api/auth/login
 export const loginUser = async ({ email, password }) => {
-  const response = await api.post("/api/auth/login", { email, password });
-  return response.data;
+  const response = await fetch(`${BASE_URL}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    let error = {};
+    try {
+      error = await response.json();
+    } catch (_) {}
+    throw { response: { data: error } };
+  }
+
+  return response.json();
 };
 
-// POST /api/auth/register
 export const registerUser = async ({ name, email, password, role }) => {
-  const response = await api.post("/api/auth/register", { name, email, password, role });
-  return response.data;
+  const response = await fetch(`${BASE_URL}/api/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password, role }),
+  });
+
+  if (!response.ok) {
+    let error = {};
+    try {
+      error = await response.json();
+    } catch (_) {}
+    throw { response: { data: error } };
+  }
+
+  return response.json();
 };
